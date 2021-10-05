@@ -41,3 +41,4 @@ for i in range(N):
     plt.scatter(X_train , Y_train , c='red')
     ax.plot(X_train, Y_pred, c = 'blue' , lw = 2)
     plt.pause(0.01)
+    
