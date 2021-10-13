@@ -16,29 +16,46 @@ def data_generator(N):
 N = 200
 X_train , Y_train = data_generator(N)
 
-#plt.scatter(X_train, Y_train)
-#plt.show()
-
 lr = 0.0001
 
 W = np.random.rand(1, 1)
 
 print(W)
 
-fig, ax =  plt.subplots()
+fig, (ax1,ax2) =  plt.subplots(1, 2, figsize=(12,6))
 
-for i in range(N):
+errors = []
+epochs = 3
 
-    #train
-    y_pred = np.matmul(X_train[i], W)
-    e = Y_train[i] - y_pred
-    W = W + e * lr * X_train[i]
-    print(W)
-    
-    #plot
-    Y_pred = np.matmul(X_train, W)
-    ax.clear()
-    plt.scatter(X_train , Y_train , c='red')
-    ax.plot(X_train, Y_pred, c = 'blue' , lw = 2)
-    plt.pause(0.01)
+for n in range(epochs):
+    for i in range(N):
+
+        #train
+        y_pred = np.matmul(X_train[i], W)
+        e = Y_train[i] - y_pred
+
+        #Update
+        W = W + e * lr * X_train[i]
+        print(W)
+        
+        #Error
+        Y_pred = np.matmul(X_train,W)
+        error = np.mean(Y_train - Y_pred)
+        errors.append(error)
+
+        #Plot Data
+        ax1.clear()
+        ax1.set_title('Data')
+        ax1.scatter(X_train , Y_train , s=1 , c='red')
+        ax1.plot(X_train, Y_pred, '-c' , lw = 2)
+        plt.pause(0.01)
+
+        #Plot Error
+        ax2.clear()
+        ax2.set_title('Loos')
+        ax2.plot(errors, '-b' , lw = 1)
+
+        plt.pause(0.01)
+
+plt.show()
     
